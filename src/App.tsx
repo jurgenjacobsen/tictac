@@ -7,42 +7,41 @@ import ContactPage from './pages/ContactPage';
 const App: React.FC = () => {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-100">
-        {/* Navigation */}
-        <nav className="bg-white shadow-lg">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="flex justify-between h-16">
-              <div className="flex space-x-8">
-                <div className="flex items-center">
-                  <span className="text-2xl font-bold text-indigo-600">TicTac</span>
-                </div>
-                <div className="flex space-x-4 items-center">
-                  <Link
-                    to="/"
-                    className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    to="/about"
-                    className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                  >
-                    About
-                  </Link>
-                  <Link
-                    to="/contact"
-                    className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                  >
-                    Contact
-                  </Link>
-                </div>
-              </div>
-            </div>
+      <div className="flex min-h-screen bg-gray-100">
+        {/* Sidebar */}
+        <aside className="w-64 bg-white shadow-lg flex flex-col">
+          <div className="h-16 flex items-center justify-center border-b">
+            <span className="text-2xl font-bold text-brand">TicTac</span>
           </div>
-        </nav>
+
+          <nav className="flex-1 p-4 space-y-2">
+            <Link
+              to="/"
+              className="block px-4 py-2 rounded-md text-gray-700 hover:bg-indigo-50 hover:text-brand transition-colors"
+            >
+              Home
+            </Link>
+            <Link
+              to="/charts"
+              className="block px-4 py-2 rounded-md text-gray-700 hover:bg-indigo-50 hover:text-brand transition-colors"
+            >
+              Charts
+            </Link>
+            <Link
+              to="/contact"
+              className="block px-4 py-2 rounded-md text-gray-700 hover:bg-indigo-50 hover:text-brand transition-colors"
+            >
+              Contact
+            </Link>
+          </nav>
+
+          <footer className="p-4 border-t text-sm text-gray-500 text-center">
+            © 2025 TicTac
+          </footer>
+        </aside>
 
         {/* Main Content */}
-        <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <main className="flex-1 p-8 overflow-auto">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />

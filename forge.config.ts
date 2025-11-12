@@ -11,13 +11,21 @@ import { FuseV1Options, FuseVersion } from '@electron/fuses';
 import { mainConfig } from './webpack.main.config';
 import { rendererConfig } from './webpack.renderer.config';
 
+import path from 'node:path';
+
 const config: ForgeConfig = {
   packagerConfig: {
+    name: 'TicTac',
+    appVersion: '1.0.0',
+    icon: path.resolve(__dirname, 'src', 'assets', 'icon'),
+    executableName: 'tictac',
     asar: true,
   },
   rebuildConfig: {},
   makers: [
-    new MakerSquirrel({}),
+    new MakerSquirrel({
+      setupIcon: path.resolve(__dirname, 'src', 'assets', 'icon.ico'),
+    }),
     new MakerZIP({}, ['darwin']),
     new MakerRpm({}),
     new MakerDeb({}),
