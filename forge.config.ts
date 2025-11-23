@@ -60,6 +60,21 @@ const config: ForgeConfig = {
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
   ],
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: 'jurgenjacobsen',
+          name: 'tictac',
+        },
+        prerelease: true,
+        generateReleaseNotes: true,
+        draft: true,
+        token: process.env.GITHUB_TOKEN, // Ensure this is set in your environment
+      },
+    }
+  ],
 };
 
 export default config;

@@ -4,6 +4,9 @@ import HomePage from './pages/HomePage';
 import ChartsPage from './pages/ChartsPage';
 import BuilderPage from './pages/BuilderPage';
 
+// @ts-ignore
+import Icon from './assets/iconColor.png';
+
 const App: React.FC = () => {
   return (
     <Router>
@@ -11,7 +14,8 @@ const App: React.FC = () => {
         {/* Sidebar */}
         <aside className="w-64 bg-white shadow-lg flex flex-col">
           <div className="h-16 flex items-center justify-center border-b">
-            <span className="text-2xl font-bold text-brand">TicTac</span>
+            <img src={Icon} alt="a" className="h-16 w-16 mr-2" />
+            <span className="text-2xl font-bold text-[#23438c]">TicTac</span>
           </div>
 
           <nav className="flex-1 p-4 space-y-2">

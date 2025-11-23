@@ -71,16 +71,18 @@ const ChartsPage: React.FC = () => {
       const [date, category, aerodrome, indexWithExt] = f.name.split(" ");
       const index = indexWithExt.replace(".pdf", "");
 
-      let thumbUrl = `https://raw.githubusercontent.com/jurgenjacobsen/tictac-charts/main/Charts-Thumbnails/${f.name.replace(".pdf", ".png")}`;
+      let thumbUrl = `https://raw.githubusercontent.com/jurgenjacobsen/tictac-charts/main/Thumbnails/${f.name.replace(".pdf", ".png")}`;
       try {
         const testThumb = await fetch(thumbUrl);
-        if (!testThumb.ok) throw new Error("No PNG thumbnail");
-      } catch {
-        thumbUrl = `https://raw.githubusercontent.com/jurgenjacobsen/tictac-charts/main/Charts-Thumbnails/${f.name.replace(".pdf", ".jpg")}`;
-        const testThumb2 = await fetch(thumbUrl);
-        if (!testThumb2.ok) {
-          thumbUrl = "https://placehold.co/512x512";
+        if (!testThumb.ok) {
+          thumbUrl = `https://raw.githubusercontent.com/jurgenjacobsen/tictac-charts/main/Thumbnails/${f.name.replace(".pdf", ".jpg")}`;
+          const testThumb2 = await fetch(thumbUrl);
+          if (!testThumb2.ok) {
+            thumbUrl = "https://placehold.co/512x512?text=Preview+not+available&font=Poppins";
+          }
         }
+      } catch (err) {
+        thumbUrl = "https://placehold.co/512x512?text=Preview+not+available&font=Poppins";
       }
 
       pdfs.push({
@@ -164,7 +166,6 @@ const ChartsPage: React.FC = () => {
             Charts Gallery
           </h1>
 
-          {/* Refresh button */}
           <button
             onClick={fetchCharts}
             className="px-4 py-2 bg-brand text-white rounded hover:bg-brand/80 transition"
@@ -173,7 +174,6 @@ const ChartsPage: React.FC = () => {
           </button>
         </div>
 
-        {/* Search box with button */}
         <div className="flex gap-2 mb-6">
           <div className="flex-1 relative">
             <input
@@ -181,13 +181,11 @@ const ChartsPage: React.FC = () => {
               placeholder="Search by index or aerodrome..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-brand"
+              className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-brand"
             />
-
           </div>
         </div>
 
-        {/* Category filter */}
         <div className="flex gap-2 mb-6">
           <button
             onClick={() => setFilter("ALL")}
@@ -213,11 +211,10 @@ const ChartsPage: React.FC = () => {
           ))}
         </div>
 
-        {/* Floating merge button */}
         {selected.length > 0 && (
-          <div className="fixed bottom-6 right-6 z-50">
+          <div className="fixed bottom-6 right-12 z-50">
             <button
-              className="px-5 py-3 bg-brand text-white rounded-full shadow-lg hover:bg-brand/75 transition"
+              className="px-5 py-3 bg-brand text-white rounded-lg shadow-lg hover:bg-brand/75 transition"
               onClick={mergePDFs}
             >
               Download {selected.length} selected
@@ -240,15 +237,15 @@ const ChartsPage: React.FC = () => {
               {aeroCharts.map((chart, i) => (
                 <div
                   key={i}
-                  className={`ring-1 rounded-lg overflow-hidden cursor-pointer transition 
+                  className={`ring-1 rounded-lg overflow-hidden cursor-pointer transition-shadow hover:shadow-md duration-300
                     ${selected.includes(chart.name) ? "ring-2 ring-brand" : "ring-gray-200"}`}
                   onClick={() => toggleSelect(chart.name)}
                 >
-                  <img src={chart.thumb} className="w-full h-auto max-h-56 object-cover" />
+                  <img src={chart.thumb} className="w-full h-auto max-h-56 object-cover scale-100 " />
 
                   <div className="px-2 py-4">
                     <span
-                      className={`px-6 py-1 text-white text-sm font-semibold rounded-md bg-${
+                      className={`px-6 py-1 text-white text-sm font-semibold rounded bg-${
                         STYLE.CHART_TYPE[chart.category as keyof typeof STYLE.CHART_TYPE] || STYLE.CHART_TYPE.ANY
                       }`}
                     >
