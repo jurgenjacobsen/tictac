@@ -73,10 +73,10 @@ const ChartsPage: React.FC = () => {
 
       let thumbUrl = `https://raw.githubusercontent.com/jurgenjacobsen/tictac-charts/main/Thumbnails/${f.name.replace(".pdf", ".png")}`;
       try {
-        const testThumb = await fetch(thumbUrl);
+        const testThumb = await fetch(thumbUrl)
         if (!testThumb.ok) {
           thumbUrl = `https://raw.githubusercontent.com/jurgenjacobsen/tictac-charts/main/Thumbnails/${f.name.replace(".pdf", ".jpg")}`;
-          const testThumb2 = await fetch(thumbUrl);
+          const testThumb2 = await fetch(thumbUrl)
           if (!testThumb2.ok) {
             thumbUrl = "https://placehold.co/512x512?text=Preview+not+available&font=Poppins";
           }

@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Tray, Menu, nativeImage } from 'electron';
 import path from 'node:path';
 import { updateElectronApp } from 'update-electron-app';
 
@@ -34,7 +34,7 @@ const createWindow = (): void => {
     mainWindow.webContents.openDevTools();
   }
 
-  // To be reviewed for security implications
+  // Example CSP - adjust for GitHub whitelist if needed
   mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
     callback({
       responseHeaders: {
@@ -45,11 +45,11 @@ const createWindow = (): void => {
   });
 };
 
+
 app.on('ready', () => {
   createWindow();
-  if (mainWindow) {
-    mainWindow.maximize()
-  }
+
+  if (mainWindow) mainWindow.maximize();
 });
 
 app.on('window-all-closed', () => {
@@ -61,5 +61,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
+  } else {
+    mainWindow?.show();
   }
 });

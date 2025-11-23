@@ -17,14 +17,23 @@ const config: ForgeConfig = {
   packagerConfig: {
     name: 'TicTac',
     appVersion: '1.0.0',
-    icon: path.resolve(__dirname, 'src', 'assets', 'icon'),
+    icon: "./src/assets/icon",
     executableName: 'tictac',
     asar: true,
+    extraResource: [
+      "./src/assets/icon.ico",
+      "./src/assets/icon.png",
+    ],
   },
   rebuildConfig: {},
   makers: [
     new MakerSquirrel({
+      title: 'TicTac',
+      name: 'TicTac',
       setupIcon: path.resolve(__dirname, 'src', 'assets', 'icon.ico'),
+      authors: 'Jürgen Jacobsen',
+      exe: 'tictac.exe',
+      description: 'Nortávia\'s Flight School desktop application.'
     }),
     new MakerZIP({}, ['darwin']),
     new MakerRpm({}),
