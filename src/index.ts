@@ -4,7 +4,6 @@ import { updateElectronApp } from 'update-electron-app';
 
 updateElectronApp({
   repo: 'jurgenheinz/tictac',
-  updateInterval: '1 hour',
   notifyUser: true,
 });
 

@@ -44,6 +44,9 @@ const ChartsPage: React.FC = () => {
   const [aerodrome, setAerodrome] = useState<string>("");
   const [search, setSearch] = useState<string>("");
 
+  // NEW
+  const [loading, setLoading] = useState<boolean>(true);
+
   // Format date YYYYMMDD → 08 Nov 2025
   const formatDate = (date: string) => {
     const y = date.slice(0, 4);
@@ -59,45 +62,51 @@ const ChartsPage: React.FC = () => {
 
   // Fetch charts from GitHub
   const fetchCharts = async () => {
-    const res = await fetch(
-      "https://api.github.com/repos/jurgenjacobsen/tictac-charts/contents/Charts"
-    );
-    const files = await res.json();
-    const pdfsRaw = files.filter((f: any) => f.name.endsWith(".pdf"));
+    try {
+      setLoading(true);
 
-    const pdfs: ChartFile[] = [];
+      const res = await fetch(
+        "https://api.github.com/repos/jurgenjacobsen/tictac-charts/contents/Charts"
+      );
+      const files = await res.json();
+      const pdfsRaw = files.filter((f: any) => f.name.endsWith(".pdf"));
 
-    for (let f of pdfsRaw) {
-      const [date, category, aerodrome, indexWithExt] = f.name.split(" ");
-      const index = indexWithExt.replace(".pdf", "");
+      const pdfs: ChartFile[] = [];
 
-      let thumbUrl = `https://raw.githubusercontent.com/jurgenjacobsen/tictac-charts/main/Thumbnails/${f.name.replace(".pdf", ".png")}`;
-      try {
-        const testThumb = await fetch(thumbUrl)
-        if (!testThumb.ok) {
-          thumbUrl = `https://raw.githubusercontent.com/jurgenjacobsen/tictac-charts/main/Thumbnails/${f.name.replace(".pdf", ".jpg")}`;
-          const testThumb2 = await fetch(thumbUrl)
-          if (!testThumb2.ok) {
-            thumbUrl = "https://placehold.co/512x512?text=Preview+not+available&font=Poppins";
+      for (let f of pdfsRaw) {
+        const [date, category, aerodrome, indexWithExt] = f.name.split(" ");
+        const index = indexWithExt.replace(".pdf", "");
+
+        let thumbUrl = `https://raw.githubusercontent.com/jurgenjacobsen/tictac-charts/main/Thumbnails/${f.name.replace(".pdf", ".png")}`;
+        try {
+          const testThumb = await fetch(thumbUrl)
+          if (!testThumb.ok) {
+            thumbUrl = `https://raw.githubusercontent.com/jurgenjacobsen/tictac-charts/main/Thumbnails/${f.name.replace(".pdf", ".jpg")}`;
+            const testThumb2 = await fetch(thumbUrl)
+            if (!testThumb2.ok) {
+              thumbUrl = "https://placehold.co/512x512?text=Preview+not+available&font=Poppins";
+            }
           }
+        } catch (err) {
+          thumbUrl = "https://placehold.co/512x512?text=Preview+not+available&font=Poppins";
         }
-      } catch (err) {
-        thumbUrl = "https://placehold.co/512x512?text=Preview+not+available&font=Poppins";
+
+        pdfs.push({
+          name: f.name,
+          url: f.download_url,
+          date,
+          category,
+          aerodrome,
+          index,
+          thumb: thumbUrl,
+        });
       }
 
-      pdfs.push({
-        name: f.name,
-        url: f.download_url,
-        date,
-        category,
-        aerodrome,
-        index,
-        thumb: thumbUrl,
-      });
+      setCharts(pdfs);
+      if (pdfs.length > 0) setAerodrome(pdfs[0].aerodrome);
+    } finally {
+      setLoading(false);
     }
-
-    setCharts(pdfs);
-    if (pdfs.length > 0) setAerodrome(pdfs[0].aerodrome);
   };
 
   useEffect(() => {
@@ -155,7 +164,6 @@ const ChartsPage: React.FC = () => {
       ) !== undefined
   );
 
-  // Collect all categories dynamically
   const categories = Array.from(new Set(charts.map((c) => c.category)));
 
   return (
@@ -222,47 +230,73 @@ const ChartsPage: React.FC = () => {
           </div>
         )}
 
-        {/* Group charts by aerodrome */}
-        {Object.entries(
-          searchedCharts.reduce((acc: any, chart) => {
-            if (!acc[chart.aerodrome]) acc[chart.aerodrome] = [];
-            acc[chart.aerodrome].push(chart);
-            return acc;
-          }, {})
-        ).map(([aero, aeroCharts]: [string, typeof charts]) => (
-          <div key={aero} className="mb-10">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">{aero} {AERODROMES.find(a => a.icao === aero)?.name ? `· ${AERODROMES.find(a => a.icao === aero)?.name}` : ''}</h2>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-              {aeroCharts.map((chart, i) => (
-                <div
-                  key={i}
-                  className={`ring-1 rounded-lg overflow-hidden cursor-pointer transition-shadow hover:shadow-md duration-300
-                    ${selected.includes(chart.name) ? "ring-2 ring-brand" : "ring-gray-200"}`}
-                  onClick={() => toggleSelect(chart.name)}
-                >
-                  <img src={chart.thumb} className="w-full h-auto max-h-56 object-cover scale-100 " />
-
-                  <div className="px-2 py-4">
-                    <span
-                      className={`px-6 py-1 text-white text-sm font-semibold rounded bg-${
-                        STYLE.CHART_TYPE[chart.category as keyof typeof STYLE.CHART_TYPE] || STYLE.CHART_TYPE.ANY
-                      }`}
-                    >
-                      {chart.category}
-                    </span>
-                  </div>
-
-                  <h1 className="text-lg font-bold text-gray-900 px-2">{chart.index}</h1>
-
-                  <span className="block px-2 pb-4 text-sm text-gray-600">
-                    {formatDate(chart.date)}
-                  </span>
-                </div>
-              ))}
-            </div>
+        {/* ================================ */}
+        {/* LOADING INDICATOR ONLY HERE     */}
+        {/* ================================ */}
+        {loading ? (
+          <div className="w-full py-20 flex flex-col items-center justify-center text-gray-500">
+            <div className="animate-spin h-10 w-10 border-4 border-brand border-t-transparent rounded-full mb-4"></div>
+            <p className="text-lg font-medium">Loading charts…</p>
           </div>
-        ))}
+        ) : (
+          Object.entries(
+            searchedCharts.reduce((acc: any, chart) => {
+              if (!acc[chart.aerodrome]) acc[chart.aerodrome] = [];
+              acc[chart.aerodrome].push(chart);
+              return acc;
+            }, {})
+          ).map(([aero, aeroCharts]: [string, typeof charts]) => (
+            <div key={aero} className="mb-10">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                {aero} {AERODROMES.find(a => a.icao === aero)?.name ? `· ${AERODROMES.find(a => a.icao === aero)?.name}` : ''}
+              </h2>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                { aeroCharts
+                  .sort((a, b) => {
+                    const parse = (str: string) => {
+                      const [num, rest] = str.split("-");
+                      const number = Number(num);
+                      const letters = rest || "";
+                      return { number, letters };
+                    };
+
+                    const A = parse(a.index);
+                    const B = parse(b.index);
+
+                    if (A.number !== B.number) return A.number - B.number;
+                    return A.letters.localeCompare(B.letters, undefined, { numeric: true });
+                  })
+                  .map((chart, i) => (
+                    <div
+                      key={i}
+                      className={`ring-1 rounded-lg overflow-hidden cursor-pointer transition-shadow hover:shadow-md duration-300
+                      ${selected.includes(chart.name) ? "ring-2 ring-brand" : "ring-gray-200"}`}
+                      onClick={() => toggleSelect(chart.name)}
+                    >
+                      <img src={chart.thumb} className="w-full h-auto max-h-56 object-cover scale-100" />
+
+                      <div className="px-2 py-4">
+                        <span
+                          className={`px-6 py-1 text-white text-sm font-semibold rounded bg-${
+                            STYLE.CHART_TYPE[chart.category as keyof typeof STYLE.CHART_TYPE] || STYLE.CHART_TYPE.ANY
+                          }`}
+                        >
+                          {chart.category}
+                        </span>
+                      </div>
+
+                      <h1 className="text-lg font-bold text-gray-900 px-2">{chart.index}</h1>
+
+                      <span className="block px-2 pb-4 text-sm text-gray-600">
+                        {formatDate(chart.date)}
+                      </span>
+                    </div>
+                ))}
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
