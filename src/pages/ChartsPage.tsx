@@ -231,7 +231,7 @@ const ChartsPage: React.FC = () => {
           }, {})
         ).map(([aero, aeroCharts]: [string, typeof charts]) => (
           <div key={aero} className="mb-10">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">{aero}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{aero} {AERODROMES.find(a => a.icao === aero)?.name ? `· ${AERODROMES.find(a => a.icao === aero)?.name}` : ''}</h2>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {aeroCharts.map((chart, i) => (
