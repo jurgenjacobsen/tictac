@@ -1,8 +1,8 @@
 import React from 'react';
 import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import ContactPage from './pages/ContactPage';
+import ChartsPage from './pages/ChartsPage';
+import BuilderPage from './pages/BuilderPage';
 
 const App: React.FC = () => {
   return (
@@ -28,10 +28,10 @@ const App: React.FC = () => {
               Charts
             </Link>
             <Link
-              to="/contact"
+              to="/builder"
               className="block px-4 py-2 rounded-md text-gray-700 hover:bg-indigo-50 hover:text-brand transition-colors"
             >
-              Contact
+              Builder
             </Link>
           </nav>
 
@@ -44,8 +44,8 @@ const App: React.FC = () => {
         <main className="flex-1 p-8 overflow-auto">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/charts" element={<ChartsPage />} />
+            <Route path="/builder" element={<BuilderPage />} />
           </Routes>
         </main>
       </div>

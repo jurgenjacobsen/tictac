@@ -1,26 +1,6 @@
-import React, { useEffect, useState } from 'react';
-
-
-interface NTAC {
-  NTACref: string;
-  NTACtext: string;
-  NTACvalidfrom: string;
-  NTACvalidto: string;
-}
-
+import React from 'react';
 
 const HomePage: React.FC = () => {
-  const [ntac, setNtac] = useState<NTAC[]>([]);
-
-  useEffect(() => {
-    fetch("https://api.flownrecords.live/")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch(console.error);
-  }, []);
-
   return (
     <div className="px-4 py-8">
       <div className="bg-white rounded-lg shadow-md p-8">
