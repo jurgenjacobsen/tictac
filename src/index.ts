@@ -47,41 +47,16 @@ const createWindow = (): void => {
 
 };
 
-const createTray = (): void => {
-  const tray = new Tray(ICON_PATH);
-  tray.setToolTip('TicTac');
-  const contextMenu = Menu.buildFromTemplate([
-    {
-      label: 'Open App',
-      click: () => {
-        const wins = BrowserWindow.getAllWindows()
-        if (wins.length === 0) {
-          createWindow();
-          mainWindow?.maximize();
-        } else {
-          wins[0].focus()
-        }
-      }
-    },
-    { role: 'quit' }
-  ])
-
-  tray.setContextMenu(contextMenu);
-}
-
-
 app.on('ready', () => {
   createWindow();
-  
-  createTray();
 
   if (mainWindow) mainWindow.maximize();
 });
 
 app.on('window-all-closed', () => {
-  /*if (process.platform !== 'darwin') {
+  if (process.platform !== 'darwin') {
     app.quit();
-  }*/
+  }
 });
 
 app.on('activate', () => {

@@ -16,13 +16,14 @@ import path from 'node:path';
 const config: ForgeConfig = {
   packagerConfig: {
     name: 'TicTac',
-    appVersion: '1.0.2',
-    icon: "./src/assets/icon",
+    appVersion: '1.0.3',
+    icon: path.resolve(__dirname, 'src', 'assets', 'icon'),
     executableName: 'tictac',
     asar: true,
     extraResource: [
       "./src/assets/icon.ico",
       "./src/assets/icon.png",
+      "public/icon.ico"
     ],
   },
   rebuildConfig: {},

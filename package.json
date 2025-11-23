@@ -1,12 +1,15 @@
 {
   "name": "tictac",
   "productName": "TicTac",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Nortávia's Flight School desktop application.",
   "main": ".webpack/main",
   "author": {
     "name": "Jürgen Jacobsen",
     "email": "jurgenjacobsen@outlook.com"
+  },
+  "build": {
+    "icons": "public/icon.ico"
   },
   "scripts": {
     "start": "electron-forge start",
