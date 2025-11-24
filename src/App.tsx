@@ -26,6 +26,12 @@ const App: React.FC = () => {
               Home
             </Link>
             <Link
+              to="/new-flight"
+              className="block px-4 py-2 rounded-md text-gray-700 hover:bg-indigo-50 hover:text-brand transition-colors"
+            >
+              New Flight
+            </Link>
+            <Link
               to="/charts"
               className="block px-4 py-2 rounded-md text-gray-700 hover:bg-indigo-50 hover:text-brand transition-colors"
             >

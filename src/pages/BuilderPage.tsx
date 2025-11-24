@@ -6,6 +6,7 @@ const BuilderPage: React.FC = () => {
   const [altitude, setAltitude] = useState("");
   const [gradient, setGradient] = useState<number | null>(null);
   const [ftPerNm, setFtPerNm] = useState<number | null>(null);
+  const [gradientLists, setGradientLists] = useState<number[]>([]);
 
   const calculate = () => {
     const distNum = parseFloat(distance);
@@ -77,26 +78,70 @@ const BuilderPage: React.FC = () => {
         {/* Button */}
         <button
           onClick={calculate}
-          className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+          className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
         >
           Calculate
         </button>
 
         {/* Results */}
         {gradient !== null && ftPerNm !== null && (
-          <div className="mt-8 border border-gray-300 rounded-lg p-6 bg-gray-50">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Results</h2>
+          <>
+            <div className="mt-8 border border-gray-300 rounded-lg p-6 bg-gray-50">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Results</h2>
 
-            <p className="text-gray-800 mb-3">
-              <span className="font-semibold">Gradient:</span>{" "}
-              {gradient}% (incl. 15% margin)
-            </p>
+              <p className="text-gray-800 mb-3">
+                <span className="font-semibold">Gradient:</span>{" "}
+                {gradient}% (incl. 15% margin)
+              </p>
 
-            <p className="text-gray-800">
-              <span className="font-semibold">Required climb:</span>{" "}
-              {ftPerNm} ft/NM (incl. 15% margin)
-            </p>
-          </div>
+              <p className="text-gray-800 mb-3">
+                <span className="font-semibold">Required climb:</span>{" "}
+                {ftPerNm} ft/NM (incl. 15% margin)
+              </p>
+
+              <button
+                onClick={() => {
+                  if (gradient !== null && !gradientLists.includes(gradient)) {
+                    setGradientLists([...gradientLists, gradient]);
+                  }
+                }}
+                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+              >
+                Add to list
+              </button>
+            </div>
+
+            <div className="mt-8 border border-gray-300 rounded-lg p-6 bg-gray-50">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Gradients List</h2>
+              { /** I want a table with the gradients as rows, with columns of airspeeds (75kt, 85, 90, 100, 120, 150) */ }
+              <table className="min-w-full table-auto">
+                <thead>
+                  <tr>
+                    <th className="px-4 py-2 border">Gnd speed-KT</th>
+                    <th className="px-4 py-2 border">75</th>
+                    <th className="px-4 py-2 border">85</th>
+                    <th className="px-4 py-2 border">90</th>
+                    <th className="px-4 py-2 border">100</th>
+                    <th className="px-4 py-2 border">120</th>
+                    <th className="px-4 py-2 border">150</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {gradientLists.map((grad, index) => (
+                    <tr key={index}>
+                      <td className="px-4 py-2 border text-center">{grad}% V/V (fpm)</td>
+                      <td className="px-4 py-2 border text-center">{Math.round((grad as number) * 75)}</td>
+                      <td className="px-4 py-2 border text-center">{Math.round((grad as number) * 85)}</td>
+                      <td className="px-4 py-2 border text-center">{Math.round((grad as number) * 90)}</td>
+                      <td className="px-4 py-2 border text-center">{Math.round((grad as number) * 100)}</td>
+                      <td className="px-4 py-2 border text-center">{Math.round((grad as number) * 120)}</td>
+                      <td className="px-4 py-2 border text-center">{Math.round((grad as number) * 150)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
     </div>

@@ -31,7 +31,7 @@ const STYLE = {
   }
 }
 
-const AERODROMES = [
+const AERODROMES: STATIC_AERODROMES[] = [
   { icao: "LPVZ", name: "Viseu" },
   { icao: "LPVL", name: "Vilar de Luz", aliases: ["Maia", "VILUZ"] },
   { icao: "LPVR", name: "Vila Real", aliases: ["VREAL"] }
@@ -230,9 +230,6 @@ const ChartsPage: React.FC = () => {
           </div>
         )}
 
-        {/* ================================ */}
-        {/* LOADING INDICATOR ONLY HERE     */}
-        {/* ================================ */}
         {loading ? (
           <div className="w-full py-20 flex flex-col items-center justify-center text-gray-500">
             <div className="animate-spin h-10 w-10 border-4 border-brand border-t-transparent rounded-full mb-4"></div>

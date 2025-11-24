@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Tray, Menu } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import { updateElectronApp } from 'update-electron-app';
 
@@ -51,6 +51,21 @@ app.on('ready', () => {
   createWindow();
 
   if (mainWindow) mainWindow.maximize();
+});
+
+ipcMain.handle("get-ntac", async () => {
+  const res = await fetch("https://tictac.nortavia.com/getNTAC.php");
+  return await res.json();
+});
+
+ipcMain.handle("get-local-wx", async () => {
+  const res = await fetch("https://tictac.nortavia.com/getCurrentWxdata.php");
+  return await res.json();
+});
+
+ipcMain.handle("open-external", async (event, url: string) => {
+  const { shell } = require('electron');
+  await shell.openExternal(url);
 });
 
 app.on('window-all-closed', () => {
