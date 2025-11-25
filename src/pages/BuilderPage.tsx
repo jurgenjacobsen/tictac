@@ -78,7 +78,7 @@ const BuilderPage: React.FC = () => {
         {/* Button */}
         <button
           onClick={calculate}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+          className="px-4 py-2 bg-brand text-white rounded-lg hover:bg-brand/90 transition"
         >
           Calculate
         </button>

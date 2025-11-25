@@ -14,7 +14,7 @@ const App: React.FC = () => {
         {/* Sidebar */}
         <aside className="w-64 bg-white shadow-lg flex flex-col">
           <div className="h-16 flex items-center justify-center border-b">
-            <img src={Icon} alt="a" className="h-16 w-16 mr-2" />
+            <img src={Icon} alt="a" className="h-16 w-16 mr-2" draggable="false"/>
             <span className="text-2xl font-bold text-[#23438c]">TicTac</span>
           </div>
 

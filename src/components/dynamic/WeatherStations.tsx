@@ -4,7 +4,7 @@ const WeatherStations: React.FC = () => {
     return (
         <table className='w-full border-collapse rounded overflow-hidden ring-1 ring-gray-300'>
             <thead>
-              <tr className='font-semibold text-lg bg-brand-secondary text-white border-b border-gray-300'>
+              <tr className='font-semibold text-lg bg-brand text-white border-b border-gray-300'>
                 <td className='px-4 py-2'>Weather Stations</td>
               </tr>
             </thead>
