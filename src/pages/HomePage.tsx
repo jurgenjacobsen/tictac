@@ -20,7 +20,7 @@ const HomePage: React.FC = () => {
         </div>
       </div>
 
-      <div className='bg-white rounded-lg shadow-md p-8  grid grid-cols-4 2xl:grid-cols-5 gap-4'>
+      <div className='bg-white rounded-lg shadow-md p-8 grid grid-cols-4 2xl:grid-cols-5 gap-4'>
         <div className='col-span-2'>
           <NTAC />
         </div>

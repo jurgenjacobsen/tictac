@@ -167,7 +167,7 @@ const ChartsPage: React.FC = () => {
   const categories = Array.from(new Set(charts.map((c) => c.category)));
 
   return (
-    <div className="px-4 py-8">
+    <div className="py-8 space-y-8">
       <div className="bg-white rounded-lg shadow-md p-8 relative">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-4xl font-bold text-gray-900">

@@ -71,7 +71,7 @@ const FlightConditions: React.FC = () => {
 
         {/* First header row */}
         <tr className="font-medium bg-brand-secondary text-white border-b border-gray-300">
-          <td rowSpan={2} className="px-2 py-2 text-center border-r">Runway</td>
+          <td rowSpan={2} className="px-2 py-2 text-center border-r">Runway</td> 
           <td rowSpan={2} className="px-2 py-2 text-center border-r">Headwind</td>
           <td rowSpan={2} className="px-2 py-2 text-center border-r">Crosswind</td>
 
@@ -84,7 +84,7 @@ const FlightConditions: React.FC = () => {
         </tr>
 
         {/* Subheader row */}
-        <tr className="font-medium bg-brand-secondary text-white border-b border-gray-300 divide-x divide-gray-400">
+        <tr className="font-medium bg-brand-secondary text-white border-b border-gray-300 divide-x divide-brand-secondary">
           <td className="px-2 py-2 text-center border-r">Solo Local</td>
           <td className="px-2 py-2 text-center border-r">Solo Nav</td>
           <td className="px-2 py-2 text-center border-r">Dual</td>

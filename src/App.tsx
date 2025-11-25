@@ -6,6 +6,7 @@ import BuilderPage from './pages/BuilderPage';
 
 // @ts-ignore
 import Icon from './assets/iconColor.png';
+import NewFlight from './pages/NewFlight';
 
 const App: React.FC = () => {
   return (
@@ -56,6 +57,7 @@ const App: React.FC = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/charts" element={<ChartsPage />} />
             <Route path="/builder" element={<BuilderPage />} />
+            <Route path="/new-flight" element={<NewFlight />} />
           </Routes>
         </main>
       </div>
