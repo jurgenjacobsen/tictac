@@ -1,7 +1,7 @@
 {
   "name": "tictac",
   "productName": "TicTac",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Nortávia's Flight School desktop application.",
   "main": ".webpack/main",
   "author": {
