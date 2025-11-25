@@ -16,7 +16,7 @@ import path from 'node:path';
 const config: ForgeConfig = {
   packagerConfig: {
     name: 'TicTac',
-    appVersion: '1.0.4',
+    appVersion: '1.0.5',
     icon: path.resolve(__dirname, 'src', 'assets', 'icon'),
     executableName: 'tictac',
     asar: true,
