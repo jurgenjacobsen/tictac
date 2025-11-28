@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-import path from 'node:path';
 import { updateElectronApp } from 'update-electron-app';
+import { parseStringPromise } from "xml2js";
+import path from 'node:path';
 
 updateElectronApp({
   repo: 'jurgenjacobsen/tictac',
@@ -63,10 +64,71 @@ ipcMain.handle("get-local-wx", async () => {
   return await res.json();
 });
 
+ipcMain.handle("get-north-wx", async () => {
+  const res = await fetch("https://tictac.nortavia.com/getLPPRWXnow.php");
+  const xml = await res.text();
+
+  const json = await parseStringPromise(xml);
+  return {
+    lppr: json.response.data[0].METAR[0]?.raw_text[0],
+    lpov: json.response.data[0].METAR[1]?.raw_text[0],
+  };
+});
+
+ipcMain.handle("get-north-taf", async () => {
+  const res = await fetch("https://tictac.nortavia.com/getLPPRtafnow.php");
+  const xml = await res.text();
+
+  const json = await parseStringPromise(xml);
+  return {
+    lppr: json.response.data[0].TAF[0]?.raw_text[0],
+    lpov: json.response.data[0].TAF[1]?.raw_text[0],
+  };
+});
+
 ipcMain.handle("open-external", async (event, url: string) => {
   const { shell } = require('electron');
   await shell.openExternal(url);
 });
+
+ipcMain.on("open-notam-popup", () => {
+  const popup = new BrowserWindow({
+    title: 'NOTAMs Briefing',
+    width: 1280,
+    height: 720,
+    minWidth: 720,
+    minHeight: 720,
+    icon: ICON_PATH,
+    autoHideMenuBar: true,
+    center: true,
+    minimizable: false,
+    alwaysOnTop: true,
+    webPreferences: {
+      nodeIntegration: false
+    }
+  })
+
+  popup.loadURL("https://fplbriefing.nav.pt")
+})
+
+ipcMain.on("open-weather-popup", () => {
+  const popup = new BrowserWindow({
+    title: 'Weather Briefing',
+    width: 1280,
+    height: 720,
+    minWidth: 720,
+    minHeight: 720,
+    icon: ICON_PATH,
+    autoHideMenuBar: true,
+    center: true,
+    minimizable: false,
+    alwaysOnTop: true,
+    webPreferences: {
+      nodeIntegration: false
+    }
+  })
+  popup.loadURL("https://brief-ng.ipma.pt/#showFlightOverview")
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

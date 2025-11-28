@@ -33,6 +33,7 @@
     "@types/node-fetch": "^2.6.13",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
+    "@types/xml2js": "^0.4.14",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "@vercel/webpack-asset-relocator-loader": "^1.7.3",
@@ -59,6 +60,7 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.5",
-    "update-electron-app": "^3.1.1"
+    "update-electron-app": "^3.1.1",
+    "xml2js": "^0.6.2"
   }
 }
