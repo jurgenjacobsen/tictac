@@ -24,8 +24,8 @@ A modern, local Electron desktop application built with React, TypeScript, and T
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
-- npm (v7 or higher)
+- Node.js (v22 or higher)
+- npm (v11 or higher)
 
 ### Installation
 
