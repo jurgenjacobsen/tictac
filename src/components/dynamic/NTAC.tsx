@@ -31,7 +31,7 @@ const NTAC: React.FC = () => {
     return (
         <table className='w-full border-collapse rounded overflow-hidden col-span-2 bg-white shadow-md'>
             <thead>
-              <tr className='font-semibold text-lg  text-white'>
+              <tr className='font-semibold text-lg bg-brand text-white'>
                 <td className='px-4 py-2'>Notice to Air Crew</td>
               </tr>
             </thead>
