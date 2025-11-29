@@ -1,9 +1,10 @@
+import { Train } from 'lucide-react/dist/lucide-react';
 import React from 'react';
 
 const tempRegex = /(M?\d{1,2})\/(M?\d{1,2})/;
 const qnhRegex = /Q(\d{3,4})/;
 
-const WeatherStations: React.FC = () => {
+const TrainingAreas: React.FC = () => {
   const [weatherStations, updateWeatherStations] = React.useState<any>({
     LPVL: 'Not available',
     LPPR: {
@@ -61,10 +62,10 @@ const WeatherStations: React.FC = () => {
   }, []);
 
     return (
-        <table className='w-full border-collapse rounded overflow-hidden bg-white col-span-2 shadow-md'>
+        <table className='w-full border-collapse rounded overflow-hidden bg-white shadow-md'>
             <thead>
               <tr className='font-semibold text-lg bg-brand text-white border-b border-gray-300'>
-                <td className='px-4 py-2'>Weather Stations</td>
+                <td className='px-4 py-2'>Training Areas</td>
               </tr>
             </thead>
 
@@ -111,4 +112,4 @@ const WeatherStations: React.FC = () => {
     );
 };
 
-export default WeatherStations;
+export default TrainingAreas;

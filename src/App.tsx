@@ -39,6 +39,18 @@ const App: React.FC = () => {
               Charts
             </Link>
             <Link
+              to="/"
+              className="block px-4 py-2 rounded-md text-gray-700 hover:bg-indigo-50 hover:text-brand transition-colors"
+            >
+              Training Areas
+            </Link>
+            <Link
+              to="/"
+              className="block px-4 py-2 rounded-md text-gray-700 hover:bg-indigo-50 hover:text-brand transition-colors"
+            >
+              Safety Information
+            </Link>
+            <Link
               to="/builder"
               className="block px-4 py-2 rounded-md text-gray-700 hover:bg-indigo-50 hover:text-brand transition-colors"
             >
