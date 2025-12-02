@@ -25,6 +25,8 @@ const createWindow = (): void => {
     icon: ICON_PATH,
     autoHideMenuBar: true,
     center: true,
+    minHeight: 720,
+    minWidth: 1280,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
