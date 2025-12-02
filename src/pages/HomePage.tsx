@@ -1,20 +1,17 @@
 import React from 'react';
-import NTAC from '../components/dynamic/NTAC';
-import LatestSafety from '../components/dynamic/LatestSafety';
-import WeatherStations from '../components/dynamic/WeatherStations';
-import TrainingAreas from '../components/dynamic/TrainingAreas';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink,  RefreshCcw } from 'lucide-react';
 
 const links = [
     {
-        title: 'Flight Logger',
-        url: 'https://flightlogger.net',
-        img: 'https://api.flightlogger.net/images/logo.png'
+        title: 'New Flight',
+        url: 'https://nortavia.com/flight/new',
+        img: 'https://nortavia.com/assets/logo.png',
+        notExternal: true,
     },
     {
-        title: 'Aviatize',
-        url: 'https://aviatize.com',
-        img: 'https://aerosouthafrica.za.messefrankfurt.com/content/dam/messefrankfurt-southafrica/aero-south-africa/2023/2023-exhibitors/AviatizeLogo.png'
+        title: 'FlightLogger',
+        url: 'https://flightlogger.net',
+        img: 'https://api.flightlogger.net/images/logo.png'
     },
     {
         title: 'eLearning',
@@ -24,7 +21,33 @@ const links = [
     {
         title: 'ForeFlight',
         url: 'https://plan.foreflight.com/flights',
-        img: 'https://myairops.com/wp-content/uploads/2023/10/logo-foreflight.png'
+        img: 'https://myairops.com/wp-content/uploads/2023/10/logo-foreflight.png',
+    },
+    {
+        title: 'Aviatize',
+        url: 'https://aviatize.com',
+        img: 'https://aerosouthafrica.za.messefrankfurt.com/content/dam/messefrankfurt-southafrica/aero-south-africa/2023/2023-exhibitors/AviatizeLogo.png'
+    },
+    {
+        title: 'Charts',
+        url: '/charts',
+        img: 'https://aerosouthafrica.za.messefrankfurt.com/content/dam/messefrankfurt-southafrica/aero-south-africa/2023/2023-exhibitors/AviatizeLogo.png',
+        notExternal: true,
+    }
+]
+
+const NTACs = [
+    {
+        id: '02/2025',
+        title: 'Updated fuel prices at all Nortávia bases effective from 15th February 2025.'
+    }
+]
+
+const Safety = [
+    {
+        header: 'Latest Safety Alert',
+        id: 'SA 2025-9',
+        title: 'Hard Landings'
     }
 ]
 
@@ -43,89 +66,185 @@ const HomePage: React.FC = () => {
             </div>
 
             <div className='grid grid-cols-3 gap-4 items-start'>
-                <div className='bg-white rounded-lg shadow-md p-4 col-span-2'>
-                    <div className='p-4 ring-1 ring-neutral-300 rounded-lg'>
-                        <h1 className='font-semibold text-xl text-neutral-900 mb-4'>
-                            Notice to Air Crew
-                        </h1>
-                        <table className='rounded-lg overflow-hidden w-full ring-1 ring-neutral-300'>
-                            <thead>
-                                <tr>
-                                    <td className='bg-brand-secondary py-2 px-4 font-semibold text-white'>
-                                        NTAC 01/2025
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td className='py-4 px-2'>
-                                        New weather station installed at Cape Town International Airport (FACT) providing real-time data.
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div className='bg-white rounded-lg shadow-md p-4 col-span-2 h-full'>
+                    <div className='p-4 ring-1 ring-neutral-300 rounded-lg min-h-full'>
+                        <div className='flex justify-between items-center mb-2'>
+                            <h1 className='font-semibold text-xl text-neutral-900'>
+                                Notice to Air Crew
+                            </h1>
+                            <button className='px-4 py-1 text-sm font-medium bg-indigo-50 rounded-lg'>
+                                View More
+                            </button>
+                        </div>
+                        <div className='space-y-4'>
+                            { NTACs.map((ntac) => (
+                                <div key={ntac.id} className='ring-1 ring-neutral-300 rounded-lg overflow-hidden'>
+                                    <h2 className='font-medium block w-full bg-brand-secondary text-white px-4 py-2'>
+                                        NTAC {ntac.id}
+                                    </h2>
+                                    <div className='px-4 py-2'>
+                                        {ntac.title}
+                                    </div>
+                                </div>
+                            )) }
+
+                        </div>
                     </div>
                 </div>
-                <div className='bg-white rounded-lg shadow-md p-4'>
-                    <div className='p-4 ring-1 ring-neutral-300 rounded-lg'>
-                        <h1 className='font-semibold text-xl text-neutral-900 mb-4'>
-                            Safety Information
-                        </h1>
-                        <table className='rounded-lg overflow-hidden w-full ring-1 ring-neutral-300'>
-                            <thead>
-                                <tr>
-                                    <td className='bg-brand-secondary py-2 px-4 font-semibold text-white'>
-                                        Latest Safety Alert
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td className='py-4 px-2'>
-                                        SA 2025-9 Hard Landings
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div className='bg-white rounded-lg shadow-md p-4 h-full relative'>
+                    <div className='p-4 ring-1 ring-neutral-300 rounded-lg min-h-full flex flex-col justify-between'>
+                        <div>
+                            <div className='flex justify-between items-center mb-2'>
+                                <h1 className='font-semibold text-xl text-neutral-900'>
+                                    Safety Information
+                                </h1>
+                                <button className='px-4 py-1 text-sm font-medium bg-indigo-50 rounded-lg'>
+                                    View More
+                                </button>
+                            </div>
+
+                            { Safety.map((safety, index) => (
+                                <div key={safety.id} className={'ring-1 ring-neutral-300 rounded-lg overflow-hidden' + (index > 0 ? ' mt-4' : '')}>
+                                    <div className='w-full bg-brand-secondary px-4 py-2'>
+                                        <h2 className='font-medium text-white'>
+                                            {safety.header}
+                                        </h2>
+                                    </div>
+                                    <div className='px-4 py-2'>
+                                        {safety.id} - {safety.title}
+                                    </div>
+                                </div>
+                            )) }
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div className='bg-white rounded-lg shadow-md p-4'>
-                <div className='grid grid-cols-4 gap-4 items-start'>
-                    <div className='p-4 ring-1 ring-neutral-300 rounded-lg cursor-pointer flex items-center'>
-                        <h1 className='font-semibold text-xl text-neutral-900'>
-                            FlightLogger
-                        </h1>
-                        <ExternalLink className='text-neutral-500 ml-2 h-4'/>
-                    </div>
+                <div className='grid grid-cols-3 gap-4 items-start'>
+                    { links.map((link, index) => (
+                        <div key={index} className='p-4 ring-1 ring-neutral-300 rounded-lg cursor-pointer flex items-center'>
+                            <h1 className='font-semibold text-xl text-neutral-900'>
+                                {link.title}
+                            </h1>
+                            {!link.notExternal && <ExternalLink className='text-neutral-500 ml-2 h-4'/>}
+                        </div>
+                    ))}
                 </div>
             </div>
 
             <div className='grid grid-cols-3 gap-4'>
                 <div className='bg-white rounded-lg shadow-md p-4 col-span-2'>
-                    <div className='ring-1 ring-neutral-300 p-4 rounded-lg'>
-                         <h1 className='font-semibold text-xl text-neutral-900 mb-4'>
+                    <div className='ring-1 ring-neutral-300 p-4 rounded-lg min-h-full'>
+                        <h1 className='font-semibold text-xl text-neutral-900 mb-4'>
                             Weather Stations
                         </h1>
+                        <div className='space-y-4'>
+                            <div className='rounded-lg ring-1 ring-neutral-300 p-4'>
+                                <div className='font-semibold'>
+                                    LPVL - Vilar de Luz
+                                </div>
+                                <div>
+                                    LPVL 21950Z AUTO 32004KT 09/07 Q1016
+                                </div>
+                            </div>
+                            <div className='rounded-lg ring-1 ring-neutral-300 p-4'>
+                                <div className='font-semibold'>
+                                    LPPR - Porto
+                                </div>
+                                <div>
+                                    METAR LPPR 021930Z 01011KT 9999 -SHRA FEW014 FEW018CB BKN022 09/07 Q1016
+                                </div>
+
+                                <div className='mt-2'>
+                                    TAF LPPR 021700Z 0218/0318 26012KT 9999 SCT020 TEMPO 0218/0222 8000 SHRA SCT008 FEW020CB BKN030 PROB30 0218/0220 VRB15G25KT 2000 +TSRAGS SCT016CB BECMG 0222/0224 08007KT PROB30 TEMPO 0302/0308 2000 BCFG BR SCT002 BECMG 0304/0306 14005KT BECMG 0315/0317 26010KT
+                                </div>
+                            </div>
+                            <div className='rounded-lg ring-1 ring-neutral-300 p-4'>
+                                <div className='font-semibold'>
+                                    LPOV - Ovar AB
+                                </div>
+                                <div>
+                                    METAR Not available
+                                </div>
+                                <div className='mt-2'>
+                                    TAF LPOV 021706Z 0218/0318 28012KT 9999 SCT020 TEMPO 0218/0224 3000 SHRA BKN014 SCT020CB PROB30 TEMPO 0218/0221 30015G32KT 2000 +TSRAGS BKN009 BKN018CB BECMG 0300/0302 04005KT PROB30 0302/0309 0200 FG BECMG 0308/0310 17008KT TEMPO 0312/0318 6000 -SHRA BKN018 FEW022TCU BECMG 0313/0315 25010KT
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className='bg-white rounded-lg shadow-md p-4'>
                     <div className='ring-1 ring-neutral-300 p-4 rounded-lg'>
-                        <h1 className='font-semibold text-xl text-neutral-900 mb-4'>
-                            Training Areas
-                        </h1>
-                        <div className='ring-1 ring-neutral-300 p-4 rounded-lg'>
-                            <div className=''>
-                                <h2 className='font-medium text-netral-900'>
+                        <div className='flex justify-between items-center mb-4'>
+                            <h1 className='font-semibold text-xl text-neutral-900'>
+                                Training Areas
+                            </h1>
+                            <div className='flex space-x-4 items-center'>
+                                <button className='p-1 text-sm font-medium bg-indigo-50 rounded-full'>
+                                    <RefreshCcw className='text-neutral-700 h-5 cursor-pointer'/>
+                                </button>
+                                <button className='px-4 py-1 text-sm font-medium bg-indigo-50 rounded-lg'>
+                                    View More
+                                </button>
+                            </div>
+                        </div>
+                        <div className='space-y-4'>
+                            <div className='ring-1 ring-neutral-300 rounded-lg overflow-hidden'>
+                                <h2 className='font-medium border-b px-4 py-2'>
                                     Vila das Aves
                                 </h2>
-                                <div>
-                                    <span className='rounded block w-full bg-green-500'>
-                                        Current session until 14:00
+                                <div className='py-4 px-4 space-y-2'>
+                                    <span className='rounded-md block w-full bg-brand-secondary text-white px-2'>
+                                        Currently occupied until 14:00
                                     </span>
-                                    <span className='rounded block w-full bg-neutral-300'>
+                                    <span className='rounded-md block w-full bg-neutral-300 px-2'>
                                         Next session from 15:00 to 17:00
+                                    </span>
+                                    <span className='rounded-md block w-full ring-1 ring-neutral-300 px-2'>
+                                        Free at 18:00
+                                    </span>
+                                </div>
+                            </div>
+                            <div className='ring-1 ring-neutral-300 rounded-lg overflow-hidden'>
+                                <h2 className='font-medium border-b px-4 py-2'>
+                                    Barcelos
+                                </h2>
+                                <div className='py-4 px-4 space-y-2'>
+                                    <span className='rounded-md block w-full bg-green-500 px-2'>
+                                        Currently free
+                                    </span>
+                                    <span className='rounded-md block w-full bg-neutral-300 px-2'>
+                                        No reservations today
+                                    </span>
+                                </div>
+                            </div>
+                            <div className='ring-1 ring-neutral-300 rounded-lg overflow-hidden'>
+                                <h2 className='font-medium border-b px-4 py-2'>
+                                    Guimarães
+                                </h2>
+                                <div className='py-4 px-4 space-y-2'>
+                                    <span className='rounded-md block w-full bg-green-500 px-2'>
+                                        Currently free
+                                    </span>
+                                    <span className='rounded-md block w-full bg-neutral-300 px-2'>
+                                        Next session from 15:00 to 17:00
+                                    </span>
+                                    <span className='rounded-md block w-full ring-1 ring-neutral-300 px-2'>
+                                        Free at 17:00
+                                    </span>
+                                </div>
+                            </div>
+                            <div className='ring-1 ring-neutral-300 rounded-lg overflow-hidden'>
+                                <h2 className='font-medium border-b px-4 py-2'>
+                                    Paredes
+                                </h2>
+                                <div className='py-4 px-4 space-y-2'>
+                                    <span className='rounded-md block w-full bg-brand-secondary text-white px-2'>
+                                        Currently occupied until 13:00
+                                    </span>
+                                    <span className='rounded-md block w-full bg-neutral-300 px-2'>
+                                        Next session from 15:00 to 18:00
                                     </span>
                                 </div>
                             </div>
@@ -133,27 +252,6 @@ const HomePage: React.FC = () => {
                     </div>
                 </div>
             </div>
-
-
-            {/*<div className='grid grid-cols-3 gap-4 items-start'>
-                <NTAC />
-                <LatestSafety />
-            </div>
-
-            <div className='grid grid-cols-3 gap-4'>
-                {
-                    links.map((link) => (
-                        <div key={link.title} className='bg-white rounded-lg shadow-md cursor-pointer p-8 flex justify-center items-center'>
-                            <img src={link.img} alt={link.title} className='max-h-16 object-cover'/>
-                        </div>
-                    ))
-                }
-            </div>
-
-            <div className='grid grid-cols-3 gap-4 items-start'>
-                <WeatherStations />
-                <TrainingAreas />
-            </div>*/}
         </div>
     );
 };
