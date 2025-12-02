@@ -121,7 +121,12 @@ const HomePage: React.FC = () => {
                                     Vila das Aves
                                 </h2>
                                 <div>
-                                    
+                                    <span className='rounded block w-full bg-green-500'>
+                                        Current session until 14:00
+                                    </span>
+                                    <span className='rounded block w-full bg-neutral-300'>
+                                        Next session from 15:00 to 17:00
+                                    </span>
                                 </div>
                             </div>
                         </div>
