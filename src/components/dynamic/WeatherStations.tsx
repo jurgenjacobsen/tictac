@@ -105,9 +105,58 @@ const WeatherStations: React.FC = () => {
                   { weatherStations.LPOV ? `${weatherStations.LPOV.taf}` : 'TAF Not available' }
                 </td>
               </tr>
-        
+
             </tbody>
           </table>
+        /*
+        <table className='w-full border-collapse rounded overflow-hidden bg-white col-span-2 shadow-md'>
+            <thead>
+              <tr className='font-semibold text-lg bg-brand text-white border-b border-gray-300'>
+                <td className='px-4 py-2'>Weather Stations</td>
+              </tr>
+            </thead>
+
+            <tbody >
+              <tr>
+                <td className='font-semibold px-4 pt-4'>LPVL - Vilar de Luz</td>
+              </tr>
+              <tr className='border-b border-gray-300'>
+                <td className='px-4 pb-4'>
+                  { weatherStations.LPVL ? `${weatherStations.LPVL}` : 'METAR Not available' }
+                </td>
+              </tr>
+
+              <tr>
+                <td className='font-semibold px-4 pt-4'>LPPR - Porto</td>
+              </tr>
+              <tr>
+                <td className='px-4 pb-4'>
+                  { weatherStations.LPPR ? `${weatherStations.LPPR.metar}` : 'METAR Not available' }
+                </td>
+              </tr>
+              <tr className='border-b border-gray-300'>
+                <td className='px-4 pb-4'>
+                  { weatherStations.LPPR ? `${weatherStations.LPPR.taf}` : 'TAF Not available' }
+                </td>
+              </tr>
+
+              <tr>
+                <td className='font-semibold px-4 pt-4'>LPOV - Ovar AB</td>
+              </tr>
+              <tr>
+                <td className='px-4 pb-4'>
+                  { weatherStations.LPOV ? `${weatherStations.LPOV.metar}` : 'METAR Not available' }
+                </td>
+              </tr>
+              <tr>
+                <td className='px-4 pb-4'>
+                  { weatherStations.LPOV ? `${weatherStations.LPOV.taf}` : 'TAF Not available' }
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        */
     );
 };
 
