@@ -39,7 +39,7 @@ const links = [
 const NTACs = [
     {
         id: '02/2025',
-        title: 'Updated fuel prices at all Nortávia bases effective from 15th February 2025.'
+        title: 'LEAS is closeded for school flights during weekdays until December 31st, 2025.'
     }
 ]
 
