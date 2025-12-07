@@ -184,8 +184,8 @@ const NewFlight: React.FC = () => {
                                         ))}
                                     </select>
 
-                                    <button 
-                                        className='mt-4 w-full bg-brand text-white py-2 rounded-md hover:bg-brand/90 disabled:bg-gray-400' 
+                                    <button
+                                        className='mt-4 w-full bg-brand text-white py-2 rounded-md hover:bg-brand/90 disabled:bg-gray-400'
                                         disabled={!selectedAircraft}
                                         onClick={() => {
                                             setDropDownsVisible(prev => ({ ...prev, '1': false, '2': true }));
@@ -213,8 +213,8 @@ const NewFlight: React.FC = () => {
                                             </div>
                                             <div className='text-right'>
                                                 <h1 className='text-2xl font-semibold'>
-                                                    {selectedAircraft 
-                                                    ? 
+                                                    {selectedAircraft
+                                                    ?
                                                         <>
                                                             <span>
                                                                 RTV
@@ -223,7 +223,7 @@ const NewFlight: React.FC = () => {
                                                                 {selectedAircraft ? aircrafts.find(ac => ac.id === selectedAircraftType)?.fleet.find(f => f.reg === selectedAircraft)?.callsign.replace(/RTV/, '') : '...'}
                                                             </span>
                                                         </>
-                                                        : 
+                                                        :
                                                     '...'}
                                                 </h1>
                                                 <span className='text-sm'>
@@ -258,7 +258,7 @@ const NewFlight: React.FC = () => {
 
                             <div className={`grid grid-cols-3 gap-4 mt-4 ${dropDownsVisible['2'] ? '' : 'hidden'}`}>
                                 <div>
-                                    <button 
+                                    <button
                                         className='w-full bg-brand text-white py-2 rounded-md hover:bg-brand/90 disabled:bg-gray-400'
                                         onClick={() => {
                                             // @ts-ignore
@@ -282,8 +282,8 @@ const NewFlight: React.FC = () => {
                                             </div>
                                         ) : null
                                     }
-                                    <button 
-                                        className='mt-4 w-full bg-brand text-white py-2 rounded-md hover:bg-brand/90 disabled:bg-gray-400' 
+                                    <button
+                                        className='mt-4 w-full bg-brand text-white py-2 rounded-md hover:bg-brand/90 disabled:bg-gray-400'
                                         disabled={!notamFileData}
                                         onClick={() => {
                                             setDropDownsVisible(prev => ({ ...prev, '2': false, '3': true }));
@@ -292,23 +292,25 @@ const NewFlight: React.FC = () => {
                                         Continue
                                     </button>
                                 </div>
-                                <div className='rounded ring-1 ring-gray-300 p-4 col-span-2'>
-                                    <h2>
-                                        NOTAMs Briefing
-                                    </h2>
-                                    <input 
-                                        type="file" 
-                                        accept='.pdf'
-                                        className='
-                                            cursor-pointer block w-full mt-2 text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 ring-1 ring-gray-300 rounded
-                                            file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-brand hover:file:bg-brand/5'
-                                        ref={notamFile}
-                                        onChange={(e) => {
-                                            if (e.target.files && e.target.files.length > 0) {
-                                                setNotamFileData(e.target.files[0]);
-                                            }
-                                        }}
-                                    />
+                                <div className='rounded ring-1 ring-gray-300 p-4 col-span-2 flex items-center'>
+                                    <div className='w-full'>
+                                        <h2>
+                                            NOTAMs Briefing
+                                        </h2>
+                                        <input
+                                            type="file"
+                                            accept='.pdf'
+                                            className='
+                                                cursor-pointer block w-full mt-2 text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 ring-1 ring-gray-300 rounded
+                                                file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-brand hover:file:bg-brand/5'
+                                            ref={notamFile}
+                                            onChange={(e) => {
+                                                if (e.target.files && e.target.files.length > 0) {
+                                                    setNotamFileData(e.target.files[0]);
+                                                }
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -335,7 +337,7 @@ const NewFlight: React.FC = () => {
 
                             <div className={`grid grid-cols-3 gap-4 mt-4 ${dropDownsVisible['3'] ? '' : 'hidden'}`}>
                                 <div>
-                                    <button 
+                                    <button
                                         className='w-full bg-brand text-white py-2 rounded-md hover:bg-brand/90 disabled:bg-gray-400'
                                         onClick={() => {
                                             // @ts-ignore
@@ -359,8 +361,8 @@ const NewFlight: React.FC = () => {
                                             </div>
                                         ) : null
                                     }
-                                    <button 
-                                        className='mt-4 w-full bg-brand text-white py-2 rounded-md hover:bg-brand/90 disabled:bg-gray-400' 
+                                    <button
+                                        className='mt-4 w-full bg-brand text-white py-2 rounded-md hover:bg-brand/90 disabled:bg-gray-400'
                                         disabled={!weatherFileData}
                                         onClick={() => {
                                             setDropDownsVisible(prev => ({ ...prev, '3': false, '4': true }));
@@ -369,23 +371,25 @@ const NewFlight: React.FC = () => {
                                         Continue
                                     </button>
                                 </div>
-                                <div className='rounded ring-1 ring-gray-300 p-4 col-span-2'>
-                                    <h2>
-                                        Weather Briefing
-                                    </h2>
-                                    <input 
-                                        type="file" 
-                                        accept='.pdf'
-                                        className='
-                                            cursor-pointer block w-full mt-2 text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 ring-1 ring-gray-300 rounded
-                                            file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-brand hover:file:bg-brand/5'
-                                        ref={weatherFile}
-                                        onChange={(e) => {
-                                            if (e.target.files && e.target.files.length > 0) {
-                                                setWeatherFileData(e.target.files[0]);
-                                            }
-                                        }}
-                                    />
+                                <div className='rounded ring-1 ring-gray-300 p-4 col-span-2 flex items-center'>
+                                    <div className='w-full'>
+                                        <h2>
+                                            Weather Briefing
+                                        </h2>
+                                        <input
+                                            type="file"
+                                            accept='.pdf'
+                                            className='
+                                                cursor-pointer block w-full mt-2 text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 ring-1 ring-gray-300 rounded
+                                                file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-brand hover:file:bg-brand/5'
+                                            ref={weatherFile}
+                                            onChange={(e) => {
+                                                if (e.target.files && e.target.files.length > 0) {
+                                                    setWeatherFileData(e.target.files[0]);
+                                                }
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
