@@ -1,114 +1,85 @@
-import { Train } from 'lucide-react/dist/lucide-react';
 import React from 'react';
-
-const tempRegex = /(M?\d{1,2})\/(M?\d{1,2})/;
-const qnhRegex = /Q(\d{3,4})/;
+import { RefreshCcw } from 'lucide-react';
 
 const TrainingAreas: React.FC = () => {
-  const [weatherStations, updateWeatherStations] = React.useState<any>({
-    LPVL: 'Not available',
-    LPPR: {
-      metar: 'Not available',
-      taf: 'Not available',
-    },
-    LPOV: {
-      metar: 'Not available',
-      taf: 'Not available',
-    },
-  });
-
-  React.useEffect(() => {
-    async function fetchWeatherData() {
-      let northWx = await (window as any).api.getNorthWx();
-      let northTaf = await (window as any).api.getNorthTaf();
-      let localWx = await (window as any).api.getLocalWx();
-
-      const lpprTempMatch = northWx.lppr.match(tempRegex);
-      const lpprQnhMatch = northWx.lppr.match(qnhRegex);
-
-      const date = new Date();
-      const obsTime = date.getUTCHours().toString().padStart(2, '0') + (Math.round(date.getUTCMinutes()/10)*10).toString().padStart(2, '0');
-
-      let newData = {
-        LPVL: localWx ? `
-          LPVL ${date.getDate()}${obsTime}Z AUTO ${localWx[0]?.winddir}${String(localWx[0]?.windNM).padStart(2, "0")}${localWx[0]?.windGustNM > (localWx[0]?.windNM*1+10) ? 'G' + String(localWx[0]?.windGustNM).padStart(2, "0") : ''}KT ${lpprTempMatch[1]}/${lpprTempMatch[2]} Q${lpprQnhMatch[1]}`
-        : 'Not available',
-
-        LPPR: northWx ? {
-          metar: northWx.lppr,
-          taf: northTaf.lppr,
-        } : {
-          metar: 'Not available',
-          taf: 'Not available',
-        },
-        LPOV: northWx ? {
-          metar: northWx.lpov,
-          taf: northTaf.lpov,
-        } : {
-          metar: 'Not available',
-          taf: 'Not available',
-        },
-      };
-
-      updateWeatherStations(newData);
-    }
-
-    fetchWeatherData().then(() => {
-      console.log('Weather data fetched');
-    }).catch((error) => {
-      console.error('Error fetching weather data:', error)
-    });
-
-  }, []);
+    const IS_IN_AREAS = location.hash.includes('#/areas');
 
     return (
-        <table className='w-full border-collapse rounded overflow-hidden bg-white shadow-md'>
-            <thead>
-              <tr className='font-semibold text-lg bg-brand text-white border-b border-gray-300'>
-                <td className='px-4 py-2'>Training Areas</td>
-              </tr>
-            </thead>
-
-            <tbody >
-              <tr>
-                <td className='font-semibold px-4 pt-4'>LPVL - Vilar de Luz</td>
-              </tr>
-              <tr className='border-b border-gray-300'>
-                <td className='px-4 pb-4'>
-                  { weatherStations.LPVL ? `${weatherStations.LPVL}` : 'METAR Not available' }
-                </td>
-              </tr>
-
-              <tr>
-                <td className='font-semibold px-4 pt-4'>LPPR - Porto</td>
-              </tr>
-              <tr>
-                <td className='px-4 pb-4'>
-                  { weatherStations.LPPR ? `${weatherStations.LPPR.metar}` : 'METAR Not available' }
-                </td>
-              </tr>
-              <tr className='border-b border-gray-300'>
-                <td className='px-4 pb-4'>
-                  { weatherStations.LPPR ? `${weatherStations.LPPR.taf}` : 'TAF Not available' }
-                </td>
-              </tr>
-
-              <tr>
-                <td className='font-semibold px-4 pt-4'>LPOV - Ovar AB</td>
-              </tr>
-              <tr>
-                <td className='px-4 pb-4'>
-                  { weatherStations.LPOV ? `${weatherStations.LPOV.metar}` : 'METAR Not available' }
-                </td>
-              </tr>
-              <tr>
-                <td className='px-4 pb-4'>
-                  { weatherStations.LPOV ? `${weatherStations.LPOV.taf}` : 'TAF Not available' }
-                </td>
-              </tr>
-        
-            </tbody>
-          </table>
+        <div className='ring-1 ring-neutral-300 p-4 rounded-lg'>
+            <div className='flex justify-between items-center mb-4'>
+                <h1 className='font-semibold text-xl text-neutral-900'>
+                    Training Areas
+                </h1>
+                <div className='flex space-x-4 items-center'>
+                    <button className='p-1 text-sm font-medium bg-indigo-50 rounded-full'>
+                        <RefreshCcw className='text-neutral-700 h-5 cursor-pointer'/>
+                    </button>
+                    {!IS_IN_AREAS && <button className='px-4 py-1 text-sm font-medium bg-indigo-50 rounded-lg'>
+                        View More
+                    </button>}
+                </div>
+            </div>
+            <div className='space-y-4'>
+                <div className='ring-1 ring-neutral-300 rounded-lg overflow-hidden'>
+                    <h2 className='font-medium border-b px-4 py-2'>
+                        Vila das Aves
+                    </h2>
+                    <div className='py-4 px-4 space-y-2'>
+                        <span className='rounded-md block w-full bg-brand-secondary text-white px-2'>
+                            Currently occupied until 14:00
+                        </span>
+                        <span className='rounded-md block w-full bg-neutral-300 px-2'>
+                            Next session from 15:00 to 17:00
+                        </span>
+                        <span className='rounded-md block w-full ring-1 ring-neutral-300 px-2'>
+                            Free at 18:00
+                        </span>
+                    </div>
+                </div>
+                <div className='ring-1 ring-neutral-300 rounded-lg overflow-hidden'>
+                    <h2 className='font-medium border-b px-4 py-2'>
+                        Barcelos
+                    </h2>
+                    <div className='py-4 px-4 space-y-2'>
+                        <span className='rounded-md block w-full bg-green-500 px-2'>
+                            Currently free
+                        </span>
+                        <span className='rounded-md block w-full bg-neutral-300 px-2'>
+                            No reservations today
+                        </span>
+                    </div>
+                </div>
+                <div className='ring-1 ring-neutral-300 rounded-lg overflow-hidden'>
+                    <h2 className='font-medium border-b px-4 py-2'>
+                        Guimarães
+                    </h2>
+                    <div className='py-4 px-4 space-y-2'>
+                        <span className='rounded-md block w-full bg-green-500 px-2'>
+                            Currently free
+                        </span>
+                        <span className='rounded-md block w-full bg-neutral-300 px-2'>
+                            Next session from 15:00 to 17:00
+                        </span>
+                        <span className='rounded-md block w-full ring-1 ring-neutral-300 px-2'>
+                            Free at 17:00
+                        </span>
+                    </div>
+                </div>
+                <div className='ring-1 ring-neutral-300 rounded-lg overflow-hidden'>
+                    <h2 className='font-medium border-b px-4 py-2'>
+                        Paredes
+                    </h2>
+                    <div className='py-4 px-4 space-y-2'>
+                        <span className='rounded-md block w-full bg-brand-secondary text-white px-2'>
+                            Currently occupied until 13:00
+                        </span>
+                        <span className='rounded-md block w-full bg-neutral-300 px-2'>
+                            Next session from 15:00 to 18:00
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };
 
