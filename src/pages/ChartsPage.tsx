@@ -189,6 +189,7 @@ const ChartsPage: React.FC = () => {
               placeholder="Search by index or aerodrome..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
+              spellCheck={false}
               className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-brand"
             />
           </div>
