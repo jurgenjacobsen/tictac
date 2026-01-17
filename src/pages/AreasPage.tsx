@@ -77,27 +77,45 @@ const FIX_VALON: [number, number] = [41.19116666666667, -8.497833333333332];
 // --- MOCK DATA ---
 const TRAINING_AREAS: TrainingArea[] = [
     {
-        id: 'area-famal', name: 'Famalicão', color: 'blue',
+        id: 'FAMAL', name: 'Famalicão', color: 'blue',
         bounds: [[41.419722,-8.557778],[41.518056,-8.593889],[41.522778,-8.579722],[41.531667,-8.532778],[41.530278,-8.503611],[41.528611,-8.492778],[41.509444,-8.474444],[41.479444,-8.468611],[41.451111,-8.492500],[41.419722,-8.508611],[41.419722,-8.557778]],
         center: [41.476966, -8.519836], entryPoint: [41.419722, -8.508611], via: [FIX_STIRS]
     },
     {
-        id: 'area-aves', name: 'Vila das Aves', color: 'purple',
+        id: 'AVES', name: 'Vila das Aves', color: 'blue',
         bounds: [[41.339167,-8.391111],[41.402222,-8.420833],[41.408056,-8.329167],[41.402222,-8.258056],[41.353889,-8.267778],[41.339167,-8.391111]],
         center: [41.381386, -8.326920], entryPoint: [41.339167, -8.391111], via: [FIX_STIRS]
     },
     {
-        id: 'area-pared', name: 'Paredes', color: 'orange',
+        id: 'PARED', name: 'Paredes', color: 'blue',
         bounds: [[41.197778,-8.329167],[41.201667,-8.342222],[41.225556,-8.346111],[41.281111,-8.303889],[41.281111,-8.254722],[41.243889,-8.215000],[41.197778,-8.329167]],
         center: [41.244782, -8.285556], entryPoint: [41.197778, -8.329167], via: [FIX_VALON]
-    }
+    },
+    {
+        id: 'GUIMA',
+        name: 'Guimaraes',
+        color: 'blue',
+        bounds: [
+            [41.463611, -8.425556], // 41 27 49 N 008 25 32 W
+            [41.492500, -8.358056], // 41 29 33 N 008 21 29 W
+            [41.484722, -8.282222], // 41 29 05 N 008 16 56 W
+            [41.419722, -8.270278], // 41 25 11 N 008 16 13 W
+            [41.431111, -8.335000], // 41 25 52 N 008 20 6 W
+            [41.414444, -8.427778], // 41 24 52 N 008 25 40 W
+            [41.463611, -8.425556]  // Closing loop
+        ],
+        center: [41.451000, -8.349000],
+        entryPoint: [41.414444, -8.427778],
+        via: [FIX_STIRS]
+    },
 ];
 
 // *** EDIT THIS TO MATCH YOUR CURRENT UTC TIME TO SEE MOVEMENT ***
 const SCHEDULE: Reservation[] = [
-    { aircraftId: '1', callsign: 'CS-DVA', areaId: 'area-famal', startTime: "13:00", endTime: "15:00" },
-    { aircraftId: '2', callsign: 'CS-GTY', areaId: 'area-aves', startTime: "14:00", endTime: "16:30" },
-    { aircraftId: '3', callsign: 'CS-ALX', areaId: 'area-pared', startTime: "09:00", endTime: "12:00" }
+    { aircraftId: '1', callsign: 'RTV1D', areaId: 'FAMAL', startTime: "13:00", endTime: "15:00" },
+    { aircraftId: '2', callsign: 'RTV1B', areaId: 'AVES', startTime: "14:00", endTime: "16:30" },
+    { aircraftId: '3', callsign: 'RTV1C', areaId: 'PARED', startTime: "09:00", endTime: "12:20" },
+    { aircraftId: '4', callsign: 'RTV1C', areaId: 'GUIMA', startTime: "12:30", endTime: "13:30" }
 ];
 
 // --- HELPER MATH FUNCTIONS ---
@@ -229,13 +247,13 @@ const AreasPage: React.FC = () => {
     }, [Math.floor(currentTime)]); // Update when minute changes
 
     return (
-        <div className="py-8 h-screen bg-gray-100 font-sans box-border flex flex-col">
+        <div className="py-8 h-screen font-sans box-border flex flex-col">
 
             {/* --- LAYOUT GRID (3 Columns) --- */}
-            <div className="flex-grow grid grid-cols-3 gap-6 m-6 mb-0 min-h-0">
+            <div className="flex-grow grid grid-cols-3 gap-6 mb-0 min-h-0 max-h-[calc(100vh-6rem)]">
 
                 {/* COLUMN 1 & 2: THE MAP (Spans 2 columns) */}
-                <div className="col-span-2 bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 relative z-0 h-full">
+                <div className="col-span-2 bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 relative z-0">
 
                     {/* LIVE CLOCK WIDGET */}
                     <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-4 py-2 rounded-lg shadow-lg border border-gray-200 z-[1000] flex flex-col items-end">
@@ -245,7 +263,14 @@ const AreasPage: React.FC = () => {
                         </div>
                     </div>
 
-                    <MapContainer center={[41.35, -8.40]} zoom={11} zoomControl={false} style={{ height: '100%', width: '100%' }}>
+                    <MapContainer
+                        center={[41.35, -8.40]}
+                        zoom={11}
+                        zoomControl={false}
+                        scrollWheelZoom={false}
+                        dragging={false}
+                        doubleClickZoom={false}
+                        style={{ height: '100%', width: '100%' }}>
                         <TileLayer
                             attribution='&copy; OpenStreetMap'
                             url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
@@ -253,8 +278,8 @@ const AreasPage: React.FC = () => {
 
                         {/* Infrastructure */}
                         <Marker position={AERODROME_POS} icon={AerodromeIcon}><Popup>Vilar de Luz</Popup></Marker>
-                        <Marker position={FIX_STIRS} icon={WaypointIcon}><Tooltip direction="right" permanent>STIRS</Tooltip></Marker>
-                        <Marker position={FIX_VALON} icon={WaypointIcon}><Tooltip direction="right" permanent>VALON</Tooltip></Marker>
+                        <Marker position={FIX_STIRS} icon={WaypointIcon}><Tooltip direction="right">STIRS</Tooltip></Marker>
+                        <Marker position={FIX_VALON} icon={WaypointIcon}><Tooltip direction="right">VALON</Tooltip></Marker>
 
                         {/* Areas */}
                         {TRAINING_AREAS.map(area => {
@@ -310,7 +335,7 @@ const AreasPage: React.FC = () => {
             </div>
 
             {/* --- FLIGHT BOARD (Bottom) --- */}
-            <div className="h-48 p-6 overflow-y-auto">
+            {/*<div className="h-48 p-6 overflow-y-auto">
                  <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="text-xs text-gray-500 border-b border-gray-200">
@@ -346,7 +371,7 @@ const AreasPage: React.FC = () => {
                         ))}
                     </tbody>
                  </table>
-            </div>
+            </div>*/}
         </div>
     );
 };
