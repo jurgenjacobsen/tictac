@@ -86,6 +86,7 @@ export const SCHEDULE: Reservation[] = [
     { aircraftId: '4', callsign: 'RTV1C', areaId: 'GUIMA', startTime: "12:30", endTime: "13:30" },
     { aircraftId: '5', callsign: 'RTV1E', areaId: 'PARED', startTime: "12:57", endTime: "17:00" },
     { aircraftId: '6', callsign: 'RTV1F', areaId: 'AVES', startTime: "15:30", endTime: "17:00" },
+    { aircraftId: '7', callsign: 'RTV1G', areaId: 'GUIMA', startTime: "13:30", endTime: "16:00" },
 ];
 
 const TRAINING_AREAS: TrainingArea[] = [
