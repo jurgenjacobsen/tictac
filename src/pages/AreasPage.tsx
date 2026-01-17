@@ -61,7 +61,7 @@ interface TrainingArea {
     via: [number, number][];
 }
 
-interface Reservation {
+export interface Reservation {
     aircraftId: string;
     callsign: string;
     areaId: string;
@@ -69,26 +69,51 @@ interface Reservation {
     endTime: string;   // "HH:mm" UTC
 }
 
+export type AreaSchedule = Reservation[];
+
 // --- CONSTANTS ---
 const AERODROME_POS: [number, number] = [41.27937386290272, -8.517346814758548];
 const FIX_STIRS: [number, number] = [41.32845746737608, -8.493046002378442];
 const FIX_VALON: [number, number] = [41.19116666666667, -8.497833333333332];
 
 // --- MOCK DATA ---
+
+// *** EDIT THIS TO MATCH YOUR CURRENT UTC TIME TO SEE MOVEMENT ***
+export const SCHEDULE: Reservation[] = [
+    { aircraftId: '1', callsign: 'RTV1D', areaId: 'FAMAL', startTime: "13:00", endTime: "15:00" },
+    { aircraftId: '2', callsign: 'RTV1B', areaId: 'AVES', startTime: "13:00", endTime: "14:30" },
+    { aircraftId: '3', callsign: 'RTV1C', areaId: 'PARED', startTime: "09:00", endTime: "12:20" },
+    { aircraftId: '4', callsign: 'RTV1C', areaId: 'GUIMA', startTime: "12:30", endTime: "13:30" },
+    { aircraftId: '5', callsign: 'RTV1E', areaId: 'PARED', startTime: "12:57", endTime: "17:00" },
+    { aircraftId: '6', callsign: 'RTV1F', areaId: 'AVES', startTime: "15:30", endTime: "17:00" },
+];
+
 const TRAINING_AREAS: TrainingArea[] = [
     {
         id: 'FAMAL', name: 'Famalicão', color: 'blue',
-        bounds: [[41.419722,-8.557778],[41.518056,-8.593889],[41.522778,-8.579722],[41.531667,-8.532778],[41.530278,-8.503611],[41.528611,-8.492778],[41.509444,-8.474444],[41.479444,-8.468611],[41.451111,-8.492500],[41.419722,-8.508611],[41.419722,-8.557778]],
+        bounds: [
+            [41.419722,-8.557778],[41.518056,-8.593889],[41.522778,-8.579722],
+            [41.531667,-8.532778],[41.530278,-8.503611],[41.528611,-8.492778],
+            [41.509444,-8.474444],[41.479444,-8.468611],[41.451111,-8.492500],
+            [41.419722,-8.508611],[41.419722,-8.557778]
+        ],
         center: [41.476966, -8.519836], entryPoint: [41.419722, -8.508611], via: [FIX_STIRS]
     },
     {
         id: 'AVES', name: 'Vila das Aves', color: 'blue',
-        bounds: [[41.339167,-8.391111],[41.402222,-8.420833],[41.408056,-8.329167],[41.402222,-8.258056],[41.353889,-8.267778],[41.339167,-8.391111]],
+        bounds: [
+            [41.339167,-8.391111],[41.402222,-8.420833],[41.408056,-8.329167],
+            [41.402222,-8.258056],[41.353889,-8.267778],[41.339167,-8.391111]
+        ],
         center: [41.381386, -8.326920], entryPoint: [41.339167, -8.391111], via: [FIX_STIRS]
     },
     {
         id: 'PARED', name: 'Paredes', color: 'blue',
-        bounds: [[41.197778,-8.329167],[41.201667,-8.342222],[41.225556,-8.346111],[41.281111,-8.303889],[41.281111,-8.254722],[41.243889,-8.215000],[41.197778,-8.329167]],
+        bounds: [
+            [41.197778,-8.329167],[41.201667,-8.342222],[41.225556,-8.346111],
+            [41.281111,-8.303889],[41.281111,-8.254722],[41.243889,-8.215000],
+            [41.197778,-8.329167]
+        ],
         center: [41.244782, -8.285556], entryPoint: [41.197778, -8.329167], via: [FIX_VALON]
     },
     {
@@ -96,26 +121,14 @@ const TRAINING_AREAS: TrainingArea[] = [
         name: 'Guimaraes',
         color: 'blue',
         bounds: [
-            [41.463611, -8.425556], // 41 27 49 N 008 25 32 W
-            [41.492500, -8.358056], // 41 29 33 N 008 21 29 W
-            [41.484722, -8.282222], // 41 29 05 N 008 16 56 W
-            [41.419722, -8.270278], // 41 25 11 N 008 16 13 W
-            [41.431111, -8.335000], // 41 25 52 N 008 20 6 W
-            [41.414444, -8.427778], // 41 24 52 N 008 25 40 W
-            [41.463611, -8.425556]  // Closing loop
+            [41.463611, -8.425556],[41.492500, -8.358056],[41.484722, -8.282222],
+            [41.419722, -8.270278],[41.431111, -8.335000],[41.414444, -8.427778],
+            [41.463611, -8.425556]
         ],
         center: [41.451000, -8.349000],
         entryPoint: [41.414444, -8.427778],
         via: [FIX_STIRS]
     },
-];
-
-// *** EDIT THIS TO MATCH YOUR CURRENT UTC TIME TO SEE MOVEMENT ***
-const SCHEDULE: Reservation[] = [
-    { aircraftId: '1', callsign: 'RTV1D', areaId: 'FAMAL', startTime: "13:00", endTime: "15:00" },
-    { aircraftId: '2', callsign: 'RTV1B', areaId: 'AVES', startTime: "14:00", endTime: "16:30" },
-    { aircraftId: '3', callsign: 'RTV1C', areaId: 'PARED', startTime: "09:00", endTime: "12:20" },
-    { aircraftId: '4', callsign: 'RTV1C', areaId: 'GUIMA', startTime: "12:30", endTime: "13:30" }
 ];
 
 // --- HELPER MATH FUNCTIONS ---
@@ -330,7 +343,7 @@ const AreasPage: React.FC = () => {
 
                 {/* COLUMN 3: EMPTY (Spans 1 column) */}
                 <div className="col-span-1 bg-white rounded-lg shadow-md overflow-hidden p-4">
-                    <TrainingAreas />
+                    <TrainingAreas schedule={SCHEDULE}/>
                 </div>
             </div>
 
