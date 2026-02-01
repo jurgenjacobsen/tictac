@@ -6,7 +6,14 @@ import { rules } from './webpack.rules';
 // Filter out electron-specific loaders
 const webRules = rules.filter(rule => {
   const test = rule.test as RegExp;
-  return !test?.toString().includes('native_modules');
+  // Exclude native module loaders and asset relocator loader
+  if (test?.toString().includes('native_modules')) return false;
+  if (test?.toString().includes('node_modules')) {
+    // Check if it uses asset relocator loader
+    const ruleUse = rule.use as { loader?: string };
+    if (ruleUse?.loader?.includes('asset-relocator')) return false;
+  }
+  return true;
 });
 
 // Add CSS rule
@@ -29,6 +36,11 @@ const config: Configuration = {
     filename: 'bundle.[contenthash].js',
     clean: true,
   },
+  target: 'web',
+  node: {
+    __dirname: false,
+    __filename: false,
+  },
   module: {
     rules: webRules,
   },
@@ -40,9 +52,17 @@ const config: Configuration = {
   ],
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css'],
+    fallback: {
+      path: false,
+      fs: false,
+      crypto: false,
+    },
   },
   performance: {
     hints: false,
+  },
+  externals: {
+    electron: 'commonjs2 electron',
   },
 };
 
