@@ -66,6 +66,14 @@ To create distributable installers:
 npm run make
 ```
 
+To build just the React app for web hosting (without Electron):
+
+```bash
+npm run build-react
+```
+
+The web build will be available in the `dist` directory and can be hosted on any static file server (e.g., GitHub Pages, Netlify, Vercel, etc.).
+
 ### Linting
 
 To check code quality:
