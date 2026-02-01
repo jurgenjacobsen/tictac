@@ -4,15 +4,15 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { rules } from './webpack.rules';
 
 // Filter out electron-specific loaders
-const webRules = rules.filter(rule => {
-  const test = rule.test;
+const webRules = rules.filter((rule: any) => {
+  const test = rule?.test;
   // Exclude native module loaders and asset relocator loader
   if (test && typeof test === 'object' && 'toString' in test) {
     const testStr = test.toString();
     if (testStr.includes('native_modules')) return false;
     if (testStr.includes('node_modules')) {
       // Check if it uses asset relocator loader
-      const ruleUse = rule.use as { loader?: string };
+      const ruleUse = rule?.use as { loader?: string };
       if (ruleUse?.loader?.includes('asset-relocator')) return false;
     }
   }
