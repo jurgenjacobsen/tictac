@@ -90,3 +90,6 @@ typings/
 
 # Electron-Forge
 out/
+
+# React web build output
+dist/
